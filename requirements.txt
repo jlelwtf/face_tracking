@@ -1,0 +1,6 @@
+imutils
+mtcnn
+keras==2.2.4
+opencv-python>=4.1
+numpy
+tensorflow==1.13
