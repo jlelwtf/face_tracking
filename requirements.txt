@@ -1,3 +1,4 @@
+dlib
 imutils
 mtcnn
 keras==2.2.4

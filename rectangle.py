@@ -1,4 +1,8 @@
+import dlib
+
 import numpy as np
+
+from utils import euclidean_distance
 
 
 class Rectangle:
@@ -14,12 +18,26 @@ class Rectangle:
         return (self._x, self._y), (self._x + self._width, self._y + self._height)
 
     @property
+    def dlib_rect(self):
+        return dlib.rectangle(
+            self._x, self._y, self._x + self._width, self._y + self._height
+        )
+
+    @property
     def box(self):
         return self._x, self._y, self._width, self._height
 
     @property
     def center(self):
         return self._x + self._width // 2, self._y + self._height // 2
+
+    @property
+    def width(self):
+        return self._width
+
+    @property
+    def height(self):
+        return self._height
 
     def expand(self, a):
         box = (self._x - a, self._y - a, self._width + 2 * a, self._height + 2 * a)
@@ -32,4 +50,4 @@ class Rectangle:
     def dist(self, rectangle):
         a = np.array(self.center)
         b = np.array(rectangle.center)
-        return np.linalg.norm(a - b, axis=1)
+        return euclidean_distance(a, b)

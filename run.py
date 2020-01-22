@@ -2,6 +2,7 @@ import cv2
 import imutils
 
 from face_detector import FaceDetector
+from face_tracker import FaceTracker
 
 video_capture = cv2.VideoCapture('video/4p-c0.avi')
 # video_capture = cv2.VideoCapture(0)
@@ -19,14 +20,19 @@ def draw_labeled_rectangle(image, rectangle, text):
 
 if __name__ == '__main__':
     ret = True
-    ratio = 3.
+    ratio = 4.
+    tracker = FaceTracker()
     while ret:
         ret, frame = video_capture.read()
         if ret:
             rects = face_detector(frame)
+            rects, ids = tracker.track(rects, frame)
+
             frame = imutils.resize(frame, width=int(frame.shape[1] * ratio))
-            for rect in rects:
-                rect = rect.scale(ratio).expand(10)
-                draw_labeled_rectangle(frame, rect, 'person')
+            rects = [rect.scale(ratio) for rect in rects]
+
+            for rect, idx in zip(rects, ids):
+                # rect = rect.scale(ratio).expand(10)
+                draw_labeled_rectangle(frame, rect, str(idx))
             cv2.imshow('video', frame)
             cv2.waitKey(1)
