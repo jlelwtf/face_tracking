@@ -8,3 +8,5 @@ def crop_image(rectangle, image):
 
 def euclidean_distance(a, b):
     return np.linalg.norm(a - b)
+
+
