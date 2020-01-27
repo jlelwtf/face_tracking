@@ -2,6 +2,7 @@ import numpy as np
 from scipy.spatial.distance import cosine
 
 from face import Face
+from utils import euclidean_distance
 
 
 class FaceRepo:
@@ -23,7 +24,7 @@ class FaceRepo:
     def _get_descr_dists(self, descriptors, face):
         dists = np.zeros((len(descriptors)), np.float)
         for idx, descriptor in enumerate(descriptors):
-            dists[idx] = cosine(face.descriptor, descriptor)
+            dists[idx] = euclidean_distance(face.descriptor, descriptor)
         return dists
 
     def track_by_rectangles(self, rectangles, rect_dist_thr=1.2):
@@ -42,7 +43,7 @@ class FaceRepo:
 
         return rectangles
 
-    def track_by_descriptors(self, rectangles, descriptors, desc_dist_thr=0.06):
+    def track_by_descriptors(self, rectangles, descriptors, desc_dist_thr=0.45):
         for face in self.get_unregistered_faces():
             if descriptors:
                 dists = self._get_descr_dists(descriptors, face)

@@ -211,3 +211,4 @@ data/number_plates/*
 *.zip
 
 video/*
+*.dat
