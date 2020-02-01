@@ -26,9 +26,12 @@ urls = [
     'https://documents.epfl.ch/groups/c/cv/cvlab-pom-video2/www/match5-c3.avi'
 ]
 
-download_dir = 'test_video'
+download_dir = 'video'
 
 if __name__ == '__main__':
+    if not os.path.exists(download_dir):
+        os.mkdir(download_dir)
+
     for url in urls:
         os.system(
             'wget '
